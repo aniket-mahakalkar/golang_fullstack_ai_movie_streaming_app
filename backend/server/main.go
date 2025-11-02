@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	controller "github.com/golang_fullstack_ai_movie_streaming_app/backend/server/controllers"
+	"github.com/golang_fullstack_ai_movie_streaming_app/backend/server/routes"
 )
 
 func main() {
@@ -19,13 +19,10 @@ func main() {
 
 	})
 
-	router.GET("/movies", controller.GetMovies())
-	router.GET("/movie/:imdb_id", controller.GetMovie())
-	router.POST("/movie", controller.AddMovie())
-	router.POST("/user/register", controller.RegisterUser())
-
+	routes.SetupProtectedRoutes(router)
+	routes.SetupUnProtectedRouted(router)
 
 	if err := router.Run(":8080"); err != nil {
-		fmt.Println("Failed to start server",err)
+		fmt.Println("Failed to start server", err)
 	}
 }
